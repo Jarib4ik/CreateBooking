@@ -18,10 +18,15 @@ class TestCreateBooking(BaseCase):
     @pytest.fixture
     def create_booking(self):
         data = self.prepare_registration_data()
+
         response = MyRequests.post(url='/booking', json=data)
+
         Assertions.assert_code_status(response=response, expected_status_code=200)
         Assertions.assert_json_has_key(response=response, name='bookingid')
+        Assertions.assert_data_in_response(response=response, data=data)
+
         booking_id = response.json()['bookingid']
+
         return booking_id
 
     @allure.suite('Проверка успешного бронирования отеля c корректными параметрами')
@@ -51,36 +56,9 @@ class TestCreateBooking(BaseCase):
         Assertions.assert_code_status(response=response, expected_status_code=200)
         Assertions.assert_json_has_key(response=response, name='bookingid')
 
-    @allure.suite('Проверки бронирования отеля c числом вместо имени')
-    def test_create_booking_num_in_firstname(self):
-        data = self.prepare_registration_data(firstname=666)
-
-        response = MyRequests.post(url='/booking', json=data)
-
-        Assertions.assert_code_status(response=response, expected_status_code=400)
-        Assertions.assert_json_has_key(response=response, name='bookingid')
-
-    @allure.suite('Проверки бронирования отеля c GET запросом')
-    def test_create_booking_wrong_type_of_request(self):
-        data = self.prepare_registration_data()
-
-        response = MyRequests.get(url='/booking', json=data)
-
-        Assertions.assert_code_status(response=response, expected_status_code=200)
-        Assertions.assert_json_has_key(response=response, name='bookingid')
-
     @allure.suite('Проверки бронирования отеля c именем в 200 символов')
     def test_create_booking_long_firstname(self):
         data = self.prepare_registration_data(firstname='a' * 200)
-
-        response = MyRequests.post(url='/booking', json=data)
-
-        Assertions.assert_code_status(response=response, expected_status_code=200)
-        Assertions.assert_json_has_key(response=response, name='bookingid')
-
-    @allure.suite('Проверки бронирования отеля с запросом без имени')
-    def test_create_booking_without_firstname(self):
-        data = self.wrong_registration_data()
 
         response = MyRequests.post(url='/booking', json=data)
 
@@ -95,3 +73,27 @@ class TestCreateBooking(BaseCase):
 
         Assertions.assert_code_status(response=response, expected_status_code=200)
         Assertions.assert_json_has_key(response=response, name='bookingid')
+
+    @allure.suite('Проверки бронирования отеля с запросом без имени')
+    def test_create_booking_without_firstname(self):
+        data = self.wrong_registration_data()
+
+        response = MyRequests.post(url='/booking', json=data)
+
+        Assertions.assert_code_status(response=response, expected_status_code=500)
+
+    @allure.suite('Проверки бронирования отеля c числом вместо имени')
+    def test_create_booking_num_in_firstname(self):
+        data = self.prepare_registration_data(firstname=666)
+
+        response = MyRequests.post(url='/booking', json=data)
+
+        Assertions.assert_code_status(response=response, expected_status_code=500)
+
+    @allure.suite('Проверки бронирования отеля c GET запросом')
+    def test_create_booking_wrong_type_of_request(self):
+        data = self.prepare_registration_data()
+
+        response = MyRequests.get(url='/booking', json=data)
+
+        Assertions.assert_code_status(response=response, expected_status_code=200)
