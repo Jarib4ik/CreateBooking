@@ -1,20 +1,23 @@
 import requests
-from lib.logger import Logger
+from helpers.logger import Logger
+from data.test_data import TestData
 
 
-class MyRequests():
+class CustomRequests():
     @staticmethod
     def get(url: str, json: dict = None,):
-        return MyRequests._send(url, json, 'GET')
+        """Формирование GET запроса"""
+        return CustomRequests._send(url, json, 'GET')
 
     @staticmethod
     def post(url: str, json: dict = None):
-        return MyRequests._send(url, json, 'POST')
+        """Формирование POST запроса"""
+        return CustomRequests._send(url, json, 'POST')
 
     @staticmethod
     def _send(url: str, json: dict, method: str):
-
-        url = f"https://restful-booker.herokuapp.com{url}"
+        """Отправка запроса и запись логов"""
+        url = f"{TestData.test_url}{url}"
 
         if json is None:
             json = {}
