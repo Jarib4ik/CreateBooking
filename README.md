@@ -30,23 +30,6 @@
    виртуального окружения - `venv\Scripts\activate.bat`(для Windows), `source venv/bin/activate` (для Linux).
 4. Для установки зависимостей из файла requirements.txt в терминале PyCharm ввести команду `pip install -r requirements.txt`.
 
-## Локальный запуск автотестов:
-1. **ВАЖНО:** перед каждым запуском тестов нужно делать **pull из ветки master**, для актуальных изменений. Как его сделать:
-   - В Pycharm нажать на кнопку **"Main Menu"** в виде "бутерброда".
-   - В появившейся панели навигации нажать на **"Git"**.
-   - В открывшемся меню нажать на **"Pull"**.
-   - В окне **"Pull to"** выбрать ветку **master** из выпадающего списка.
-   - Нажать на кнопку **"Pull"** и дождаться пока загрузятся изменения.
-2. Для завпуска автотестов необходимо выполните команду `pytest tests`
-
-## flake8 линтер с использованием pre-commit
-- Выполнить `pip install -r requirements-dev.txt`
-- Выполнить `pre-commit install`
-- Подробнее о pre-commit, [документация](https://pre-commit.com/)
-- Если вам необходимо игнорировать ошибку flake8, [документация](https://flake8.pycqa.org/en/3.9.0/user/violations.html)
-- Для того чтобы настроить flake8 в PyCharm, [статья](https://tirinox.ru/flake8-pycharm/)
-***
-
 ## Структура
 ```
 .

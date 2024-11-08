@@ -46,7 +46,7 @@ class TestCreateBooking(TestData):
     def test_2_create_booking_str_in_checkin_date(self, checkin_data):
         data = self.prepare_registration_data(checkin_date=checkin_data)
 
-        with allure.step('Отправка запроса с некоректной датой'):
+        with allure.step('Отправка запроса с некорректной датой'):
             response = CustomRequests.post(url='/booking', json=data)
 
         Assertions.assert_code_status(response=response, expected_status_code=200)
@@ -78,7 +78,7 @@ class TestCreateBooking(TestData):
             response = CustomRequests.post(url='/booking', json=data)
 
         Assertions.assert_code_status(response=response, expected_status_code=200)
-        """В документации ограничения нет, чаще всего количество символов ограничивают"""
+        """В документации ограничений нет, чаще всего количество символов ограничивают"""
         Assertions.assert_json_has_key(response=response, name='bookingid')
 
     @allure.title('5. Проверка бронирования отеля c датой выезда ранее даты въезда')
